@@ -44,7 +44,7 @@
                             &nbsp
                             @else
                             @if(Auth::user()->rol=='Freelancer')
-                           
+                            <li><a href="{{ route('buscarProyecto') }}"><p class="text-white">Buscar Proyecto</p></a></li>
                             @endif
 
                             @if(Auth::user()->rol=='Cliente')

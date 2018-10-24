@@ -37,3 +37,7 @@ Route::post('/perfil/savePhone', 'PerfilController@savePhone')->name('savePhone'
 Route::get('/proyecto', 'ProyectoController@cargarvista')->name('vistaproyecto');
 Route::get('/misproyectos', 'ProyectoController@showmyprojects')->name('showMyProject');
 Route::post('/home', 'ProyectoController@subir')->name('subirproyecto');
+Route::get('buscarProyecto', 'ProyectoController@SearchProject')->name('buscarProyecto');
+Route::post('buscar', 'ProyectoController@ShowProject')->name('mostrarProyecto');
+Route::get('/detallesproyectofreelancer', 'ProyectoController@projectdetailsfreelancer')->name('detallesproyectofreelancer');
+Route::post('/descargarArchivo', 'ProyectoController@download')->name('descargarArchivo');

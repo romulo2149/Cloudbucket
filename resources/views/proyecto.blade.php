@@ -1,4 +1,6 @@
 @extends('layouts.app')
+
+@section('content')
 <link rel="stylesheet" href="{{ asset('css/style.css')}}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
 <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.3.54/css/materialdesignicons.min.css">
@@ -108,3 +110,4 @@ $(function() {
     });
 });
 </script>
+@endsection
