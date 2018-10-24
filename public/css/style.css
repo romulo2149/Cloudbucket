@@ -1,0 +1,97 @@
+.logo{
+    padding-top: 3px;
+    width: 8%;
+}
+.nav{
+    background-color: #2d323c;
+}
+.carousel{
+    height: 500px;
+}
+.carousel .item{
+    height: 500px;
+}
+.spacing25{
+    height: 25px;
+}
+.spacing50{
+    height: 50px;
+}
+.spacing100{
+    height: 100px;
+}
+.text-prin{
+    color: #2d323c;
+}
+.text-sec{
+    color: #4c5566;
+}
+.text-black{
+    color: black;
+}
+.text-white{
+    color: white;
+}
+hr{
+    border-color: #2d323c;
+    width: 70%;
+}
+.icons{
+    width: 100px;
+}
+.services:hover{
+    transform: scale(1.1);
+}
+.fondo-prin{
+    background-color: #2d323c;
+}
+.panel > .panel-heading{
+    background-color: #2d323c;
+    border-color: #2d323c;
+}
+.tur{
+    background-color: #3a9f98;
+}
+.tur:hover{
+    color: white;
+}
+.registro{
+    width: 20%;
+}
+.left-icon{
+    position:absolute;
+    top:50%;
+    margin-top:-10px;
+    z-index:5;
+    display:inline-block;
+}
+.right-icon{
+    position:absolute;
+    top:50%;
+    margin-top:-10px;
+    z-index:6;
+    display:inline-block;
+}
+ul a#AuthDropDown{
+    background-color: #2d323c;
+}
+ul a#AuthDropDown:focus{
+    background-color: #3a9f98;
+}
+ul a#AuthDropDown:hover{
+    background-color: #3a9f98;
+}
+ul a#AuthDropDown:hover{
+    background-color: #3a9f98;
+}
+ul.dropdown-menu {
+    background-color: #3a9f98;
+}
+ul.dropdown-menu:hover {
+    border-color: #3a9f98; 
+}
+#checkbox-grid li {
+    display: block;
+    float: left;
+    width: 25%;
+}
