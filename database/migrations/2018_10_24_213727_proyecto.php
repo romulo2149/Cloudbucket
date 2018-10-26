@@ -21,7 +21,7 @@ class Proyecto extends Migration
             $table->decimal('presupuesto', 12, 2);
             $table->string('anexo',200)->nullable();
             $table->string('tiempo',30)->nullable();
-            $table->enum('estatus',['Publicado', 'En Desarrollo', 'Terminado', 'Cancelado'])->default('Publicado');
+            $table->enum('estatus',['Presentado', 'Publicado', 'En Desarrollo', 'Terminado', 'Cancelado'])->default('Presentado');
             $table->integer('usuario')->unsigned();
             $table->foreign('usuario')->references('id')->on('users')->OnDelete('cascade');
             $table->foreign('area')->references('id_area')->on('areas')->OnDelete('cascade');
