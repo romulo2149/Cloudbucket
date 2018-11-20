@@ -1,20 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-<div class="spacing50"></div>
-<div class="table">
-    <div class="col-md-12">
-
- 
-        
     @if(!$detalles->isEmpty())
-            @foreach($detalles as $detalles) 
-
-            <!-- Empieza detalles proyecto -->
-            <div class="row">
-                <div class="col-sm-7 col-md-7">
-                    <div class="well">
+        @foreach($detalles as $detalles)
+        <div class="spacing50"></div>
+        <div class="container">
+        <div class="row"> 
+        <div class="col-md-7">
+                 <div class="well" style="width:100%;">
                         <h2 class="text-muted">{{$detalles->titulo}}</h2>
                         @foreach($etiquetas as $etiquetas)
                         <span class="label label-default" style="display:inline-block">{{$etiquetas->nombre}}</span>
@@ -34,268 +27,122 @@
                             <li><b>Estatus del Proyecto: </b><i style="font-size:24px" class="fa">&#xf05e;</i>  {{$detalles->estatus}}</li>
                             @endif
                         </ul>          
-                        <p>{{$detalles->descripcion}}</p>
+                        <p><b>Descripción General: </b>{{$detalles->descripcion}}</p>
+                        <H4>Entregas:</H4>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col">Fecha Entrega</th>
+                                <th scope="col">Prórroga</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(!$progresos->isEmpty())
+                                @foreach($progresos as $progresos)
+                                <tr>
+                                    <td>{{$progresos->nombre_progreso}}</td>
+                                    <td>{{$progresos->descripcion}}</td>
+                                    <td>{{$progresos->fecha_entrega}}</td>
+                                    <td>{{$progresos->fecha_prorroga}}</td>
+                                </tr>
+                                @endforeach
+                                @endif
+                            </tbody>
+                        </table>
                         <hr>
                         <center>
-                        <h3>Presupuesto disponible ${{$detalles->presupuesto}} MXN</h3>
+                        <h3>Presupuesto disponible ${{$detalles->presupuesto}} USD</h3>
                         
                         <hr>
                         <p>
-                        <form action="{{route('descargarArchivo')}}" method="post">
+                        <td>
+                        <form id="doc" action="{{route('descargarArchivo')}}" method="post">
                         {{ csrf_field() }}
                             <input type="hidden" name="archivo" value="{{$detalles->anexo}}">
-                            <button type="submit" class="btn btn-success">Descargar {{$detalles->anexo}}</button>
                         </form>
+                        <input type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" value="Solicitar Participacion">
+                        <input type="button" onclick="bajarDoc()" class="btn btn-dark" value="Descargar Documento de Requerimientos">
                         </center>
+                        </td>
                         </p>
                     </div>
-                </div>  
-                @if(Auth::user()->role=='Client')
-                <div class="col-sm-5 col-md-5">
-                    <div class="well">
-                    <p><h4>Progreso del Proyecto</h4>
-                    @if($detalles->estatus == 'Publicado')
-                    <form action="{{route('actualizarestatus')}}" method="post">
-                    {{ csrf_field() }}
-                    {{ method_field('PUT') }} 
-                    <input type="hidden" value="{{$detalles->id_proyecto}}" name="id_proyecto">
-                    <input type="hidden" value="En Desarrollo" name="estatus">
-                    <button type="submit" style="display:inline" class="btn btn-warning">Iniciar Proyecto</button>
-                    </form>
-                    @elseif($detalles->estatus == 'En Desarrollo')
-                    <form action="{{route('actualizarestatus')}}" method="post">
-                    {{ csrf_field() }}
-                    {{ method_field('PUT') }} 
-                    <input type="hidden" value="{{$detalles->id_proyecto}}" name="id_proyecto">
-                    <input type="hidden" value="Terminado" name="estatus">
-                    <button type="submit" style="display:inline" class="btn btn-success">Finalizar Proyecto</button>
-                    </form>
-                    @endif
-                    </p>
-
-                    <table id="table" class="table table-striped table-bordered nowrap" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th>Freelancer</th>
-                            <th>Estatus</th>
-                            <th>Rating</th>
-                            <th>Liberar</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if(!$progreso->isEmpty())
-                        @foreach ($progreso as $progreso)
-                            <tr>
-                                <td>{{$progreso->nombre}}</td>
-                                <td>{{$progreso->estatus}}</td>
-                                <td>
-                                @if($progreso->estatus == 'trabajando')
-                                <div class="input-group">           
-                                <span class="input-group-btn">
-                                <button onclick="quit({{$progreso->id}});" type="button" class="btn btn-default btn-number">
-                                    <span class="glyphicon glyphicon-minus"></span>
-                                    </button>
-                                    </span>
-                                    <input id="{{'cambio'.$progreso->id}}" class="form-control input-number" style="width:45px;" min="0.00" max="5.00" required>
-                                    <span class="input-group-btn">
-                                <button onclick="add({{$progreso->id}});" type="button" class="btn btn-default btn-number">
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-                                    </span>
-                                </div> 
-                                </td>
-                                
-                                <td>
-                                
-                                <form method="post" action="{{route('liberar')}}">
-                                    {{ csrf_field() }}
-                                    {{ method_field('PUT') }} 
-                                    <input id="{{'cambioII'.$progreso->id}}" type="hidden" min="0.00" max="5.00" name="rating" required>
-                                    <input type="hidden" name="idproyecto" value="{{$progreso->id_proyecto}}">
-                                    <input type="hidden" name="iduser" value="{{$progreso->id}}">
-                                    <input type="hidden" name="idprogreso" value="{{$progreso->id_progreso}}">
-                                    <input type="hidden" name="estatus" value="liberado">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-unlock-alt"></i></button>
-                                </form>
-                                @else
-                                    {{$progreso->ratingP}}
-                                @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                        @endif
-                        </tbody>
-                        </table>
-                    </div>
-                </div>
+        </div>
+        <div class="col-md-5">
+        <div class="well" style="width:100%;">
+            @if(Auth::user()->rol=='Freelancer')
+                <embed src="{{ asset('anexos/') }}/{{$detalles->anexo}}" width="100%" height="500" alt="pdf" />
+            @endif
+            @if(Auth::user()->rol=='Cliente')
+                @if(!$solicitudes->isEmpty())
+                    @foreach($solicitudes as $solicitudes)
+                    
+                        <div style="background-color:black;" class="panel-heading">
+                        <td>
+                        <h4 class="text-white">Solicitud de {{$solicitudes->username}}</h4>
+                            <form id="form{{$solicitudes->id_user}}" action="{{route('perfilFreelancer')}}" method="post">
+                                {{ csrf_field() }}  
+                                    <input type="hidden" name="id_user" value="{{$solicitudes->id_user}}">
+                            </form>
+                            <button onclick="verPerfil({{$solicitudes->id_user}})" class="btn btn-success"><span class="glyphicon glyphicon-user"></span></button>
+                            <button onclick="verPerfil({{$solicitudes->id_user}})" class="btn btn-success"><span class="glyphicon glyphicon-user"></span></button>
+                        </td>
+                        </div>
+                            <div style="background-color:white;" class="panel-body">
+                                <li><b>Mensaje: </b>{{$solicitudes->mensaje}}</li>
+                                <li><b>Fecha límite respuesta: </b>{{$solicitudes->limite}}</li>
+                            </div>
+                            <br>
+                    @endforeach
                 @endif
-
-        <!-- Termina detalles proyecto -->
-    
-        <div class="spacing50"></div>
-       <!-- Empiezan propuestas -->
-
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-
-                    <!-- Empiezan propuestas cliente -->
-                    @if(Auth::user()->role=='Client')
-                        @foreach($propuesta as $pro)
-                            @if($pro->proyecto==$detalles->id_proyecto)
-                                <div class="panel panel-default">
-                                <div class="panel-heading"><h4 class="text-white">Propuesta de {{$pro->nombreUser}}</h4></div>
-                                <div class="panel-body">
-                                <form action="{{route('updatepropuesta')}}" method="post">
-                                {{ csrf_field() }}
-                                {{ method_field('PUT') }} 
-                                <input type="hidden" name="propuesta" value="{{$pro->id_propuesta}}"></input>
-                                <div class="form-group">
-                                    <label for="titulo" class="col-md-4 control-label">Descripcion: </label>
-                                    <p>{{$pro->descripcion}}</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="dudas" class="col-md-4 control-label">Dudas: </label>
-                                    <p>{{$pro->dudas}}</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cobro" class="col-md-4 control-label">Cobro: </label>
-                                    <p>{{$pro->cobro}}</p>
-                                </div>
-                                @if($pro->estatus=='sin revisión')
-                                <div class="form-group">
-                                    <label for="cobro" class="col-md-4 control-label">Estatus</label>
-                                    <select name="estatus" id="estatus">
-                                        <option value="aceptada">Propuesta Ganadora</option>
-                                        <option value="rechazada">Propuesta NO Ganadora</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                        <input type="hidden" name="proyectoId" value="{{$pro->proyecto}}">
-                                        <input type="hidden" name="userId" value="{{$pro->user}}">
-                                        <button type="submit" class="btn btn-default">Enviar resultados</button>
-                                </div>
-                                @else
-                                <div class="form-group">
-                                    <label for="cobro" class="col-md-4 control-label">Estatus</label>
-                                    <p>{{$pro->estatus}}</p>
-                                </div>
-                                @endif
-                                </form>  
-                                </div>
-                                </div>
-                            @endif
-                        @endforeach
-                        
-                    <!-- terminan propuestas cliente -->
-
-
-
-                    <!-- Empiezan propuestas Freelancer -->
-                    @elseif(Auth::user()->role=='Freelancer')
-
-                            @if(!$propuestauser->isEmpty())
-                                @foreach($propuestauser as $propuestauser)
-                                    @if($propuestauser->proyecto == $detalles->id_proyecto)
-                                        <div class="panel panel-default">
-                                        <div class="panel-heading"><h4 class="text-white">Tú propuesta</h4></div>
-                                        <div class="panel-body">
-                                        <div class="form-group">
-                                            <label for="titulo" class="col-md-4 control-label">Descripcion: </label>
-                                            <p>{{$propuestauser->descripcion}}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="dudas" class="col-md-4 control-label">Dudas: </label>
-                                            <p>{{$propuestauser->dudas}}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cobro" class="col-md-4 control-label">Cobro: </label>
-                                            <p>{{$propuestauser->cobro}}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cobro" class="col-md-4 control-label">Estatus: </label>
-                                            <p>{{$propuestauser->estatus}}</p>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            @elseif($detalles->estatus=='Publicado')
-                            <div class="col-md-10 col-md-offset-1">
-                                    <div class="panel panel-default">
-                                    <div class="panel-heading"><h4 class="text-white">Subir Propuesta</h4></div>
-                                        <div class="panel-body">
-                                            <form class="form-horizontal" action="{{route('subirpropuesta')}}" method="post">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="proyecto" value="{{$detalles->id_proyecto}}"></input>
-                                            <div class="form-group">
-                                                <label for="titulo" class="col-md-4 control-label">Descripcion</label>
-                                                <div class="col-md-6">
-                                                    <textarea id="descripcion" name="descripcion" value="" class="form-control" rows="5" id="comment" required autofocus>
-                                                    </textarea>                                
-                                                </div>                                        
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="dudas" class="col-md-4 control-label">Dudas</label>
-                                                <div class="col-md-6">
-                                                    <input class="form-control" type="text" name="dudas" value="">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="cobro" class="col-md-4 control-label">Cobro</label>
-                                                <div class="col-md-6">
-                                                    <input class="form-control" type="number" min="0.00" name="cobro" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                            <center>
-                                                    <button type="submit" class="btn btn-default form-control" style="width:30%" >Enviar Propuesta</button>
-                                            </center>
-                                            </div>
-                                            </form>  
-                                        </div>
-                                    </div>
-                                    </div>
-                                
-                            @endif
-
-                    @endif
-                    <!-- terminan propuestas Freelancer -->
-
-
-
+            @endif
+        </div>
+        </div>
+        </div>
+        </div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Solicitar participación en <b> {{$detalles->titulo}} </b></h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('enviarsolicitud') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}   
+                        <div class="form-group">
+                            <label for="titulo" class="col-md-4 control-label">Mensaje:</label>
+                            <div class="col-md-6">
+                                <input id="titulo" type="text" class="form-control" name="mensaje" value="" required autofocus>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="titulo" class="col-md-4 control-label">Límite de Espera:</label>
+                            <div class="col-md-6">
+                                <input id="titulo" type="date" class="form-control" name="limite" value="" required autofocus>
+                            </div>
+                        </div>
+                            <input id="titulo" type="hidden" class="form-control" name="id_proyecto" value="{{$detalles->id_proyecto}}" required autofocus>
+                        <div class="form-group">
+                            <label for="titulo" class="col-md-4 control-label">Límite de Espera:</label>
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-primary" value="Enviar solicitud">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
                 </div>
             </div>
         </div>
-
-
-
-    @endforeach
+                @endforeach
     @endif
-   
-</div>
-</div>
-
-<div class="modal" tabindex="-1" role="dialog" id="myModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
- <!-- Scripts -->
+
 
  <script
     src="https://code.jquery.com/jquery-2.2.4.js"
@@ -312,6 +159,16 @@ $(function() {
 		$("#StrengthProgressBar").zxcvbnProgressBar({ passwordInput: "#password" });
     });
 });
+
+function bajarDoc()
+{
+    document.getElementById("doc").submit();
+}
+
+function verPerfil(i)
+{
+    document.getElementById("form"+i).submit();
+}
 
 
 </script>

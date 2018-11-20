@@ -14,7 +14,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('subirproyecto') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}                         
-
+                        
                         <div class="form-group">
                             <label for="titulo" class="col-md-4 control-label">Titulo</label>
                             <div class="col-md-6">
@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label for="anexo" class="col-md-4 control-label">Anexo</label>
                             <div class="col-md-6">
-                                <input id="anexo" class="form-control-file" type="file" name="anexo" value="" required autofocus>
+                                <input id="anexo" class="form-control" type="file" name="anexo" value="" required autofocus>
                             </div>
                         </div>
                         <div class="form-group">
@@ -56,7 +56,24 @@
                                 <input id="tiempo" type="text" class="form-control" name="tiempo" value="" required autofocus>
                             </div>
                         </div>
-                        <h4 style="text-align:center">Seleccione habilidades solicitadas para el Proyecto</h4>
+                        <hr>
+                        <div id="progreso" class="form-group">
+                            <label for="tiempo" class="col-md-4 control-label">Establecer Entregas del Proyecto</label>
+                            <div class="col-md-6" id="prog">
+                                <select id="sel" name="entregas" class="form-control" >
+                                    <option value="0" selected>-Establece el número de entregas-</option>
+                                    <option value="1">Entrega Única</option>
+                                    <option value="2">Dos Entregas</option>
+                                    <option value="3">Tres Entregas</option>
+                                    <option value="4">Cuatro Entregas</option>
+                                </select><br>
+                                <input type="button" class="btn btn-success form-control" onclick="establecer()" value="Establecer">
+                            </div>
+                        </div>
+                        <div id="input" class="form-group">
+                            </div>
+                        <hr>
+                        <h3 style="text-align:center">Seleccione habilidades solicitadas para el Proyecto</h3>
                         <div class="form-group">
                         <div class="col-md-10 col-md-offset-1">
                             <ul class="list-group" id="checkbox-grid">
@@ -109,5 +126,51 @@ $(function() {
 
     });
 });
+
+function establecer()
+{
+    var num = document.getElementById("sel").value;
+    progreso = "<label for='tiempo' class='col-md-4 control-label'>Nombre Progreso:</label><div class='col-md-6'><input type='text' class='form-control' name='nombre_progreso[]' required autofocus><br></div><label for='tiempo' class='col-md-4 control-label'>Descripción:</label><div class='col-md-6'><input type='text' class='form-control' name='descripcionP[]' required autofocus><br></div><label for='tiempo' class='col-md-4 control-label'>Fecha Entrega:</label><div class='col-md-6'><input type='date' class='form-control' name='fecha_entrega[]' required autofocus><br></div><label for='tiempo' class='col-md-4 control-label'>Fecha Prórroga <small>(opcional)</small>:</label><div class='col-md-6'><input type='date' class='form-control' name='fecha_prorroga[]' autofocus></div>";
+    if(num > 0)
+    {
+        if(document.getElementById("input").hasChildNodes())
+        {
+            document.getElementById("input").innerHTML = "";
+            for(var i = 1; i <= num; i++)
+            {
+                if(i < num)
+                {
+                    document.getElementById("input").innerHTML += "<div class='col-md-12'><br><center><h3>Entrega "+i+":</h3><center></div>";
+                    document.getElementById("input").innerHTML += progreso;
+                }
+                else
+                {
+                    document.getElementById("input").innerHTML += "<div class='col-md-12'><br><center><h3>Entrega Final:</h3><center></div>";
+                    document.getElementById("input").innerHTML += progreso;
+                }
+            }
+        }
+        else
+        {
+            for(var i = 1; i <= num; i++)
+            {
+                if(i < num)
+                {
+                    document.getElementById("input").innerHTML += "<div class='col-md-12'><br><center><h3>Entrega "+i+":</h3><center></div>";
+                    document.getElementById("input").innerHTML += progreso;
+                }
+                else
+                {
+                    document.getElementById("input").innerHTML += "<div class='col-md-12'><br><center><h3>Entrega Final:</h3><center></div>";
+                    document.getElementById("input").innerHTML += progreso;
+                }
+            }
+        }
+    }
+    else
+    {
+        document.getElementById("prog").innerHTML += '<small id="corfirmpasswordHelp" class="form-text text-muted" style="color:red"><div class="alert alert-warning" role="alert">Elige el número de entregas</div></small>';
+    }
+}
 </script>
 @endsection

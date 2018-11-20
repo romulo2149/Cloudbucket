@@ -19,7 +19,7 @@ class Progreso extends Migration
             $table->string('descripcion');
             $table->date('fecha_entrega');
             $table->date('fecha_prorroga')->nullable();
-            $table->decimal('pago_pct',3,2)->nullable();
+            $table->decimal('pago_pct',8,2)->nullable();
             $table->enum('estatus',['Establecida','Pendiente', 'En Desarrollo', 'Detenida', 'Terminada'])->default('Establecida');
             $table->integer('id_proyecto')->unsigned();
             $table->foreign('id_proyecto')->references('id_proyecto')->on('proyecto')->OnDelete('cascade');

@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Rutas del Perfil
 Route::get('/perfil', 'PerfilController@perfil')->name('perfil');
+Route::post('/perfilFreelancer', 'PerfilController@perfilFreelancer')->name('perfilFreelancer');
 Route::post('/perfil/guardarImagen', 'PerfilController@guardarImagen')->name('guardarImagen');
 Route::post('/perfil/cambiarNombre', 'PerfilController@cambiarNombre')->name('cambiarNombre');
 Route::post('/perfil/informacionAcademica', 'PerfilController@informacionAcademica')->name('informacionAcademica');
@@ -33,7 +34,6 @@ Route::post('/perfil/saveSalary', 'PerfilController@saveSalary')->name('saveSala
 Route::post('/perfil/savePhone', 'PerfilController@savePhone')->name('savePhone');
 
 //Rutas proyecto
-
 Route::get('/proyecto', 'ProyectoController@cargarvista')->name('vistaproyecto');
 Route::get('/misproyectos', 'ProyectoController@showmyprojects')->name('showMyProject');
 Route::post('/home', 'ProyectoController@subir')->name('subirproyecto');
@@ -41,3 +41,4 @@ Route::get('buscarProyecto', 'ProyectoController@SearchProject')->name('buscarPr
 Route::post('buscar', 'ProyectoController@ShowProject')->name('mostrarProyecto');
 Route::get('/detallesproyectofreelancer', 'ProyectoController@projectdetailsfreelancer')->name('detallesproyectofreelancer');
 Route::post('/descargarArchivo', 'ProyectoController@download')->name('descargarArchivo');
+Route::post('/enviarsolicitud', 'SolicitudController@subir')->name('enviarsolicitud');

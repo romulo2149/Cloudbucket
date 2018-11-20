@@ -55,6 +55,41 @@ class PerfilController extends Controller
                                 ]);
     }
 
+    public function perfilFreelancer(Request $request)
+    {
+        $id = $request->id_user;
+        $infousuario = DB::table('users')->where('id', $id)->first();
+        $idiomas = DB::table('users')  
+                    ->join('idioma_freelancer', 'users.id', '=', 'idioma_freelancer.id_idioma_freelancer')
+                    ->join('idioma', 'idioma_freelancer.id_idioma_freelancer', '=', 'idioma.id_idioma')
+                    ->select('users.id as usuario', 'idioma.idioma as idioma', 'idioma_freelancer.id_idioma_freelancer as id')
+                    ->where('users.id', $id)
+                    ->get();       
+        $certificaciones = DB::table('users')  
+                    ->join('certificacion_freelancer', 'users.id', '=', 'certificacion_freelancer.id_certificacion_freelancer')
+                    ->join('certificacion', 'certificacion.id_certificacion', '=', 'certificacion_freelancer.id_certificacion_freelancer')
+                    ->select('users.id as usuario', 'certificacion.nombre as nombre', 'certificacion.compañia as compañia', 'certificacion_freelancer.id_certificacion_freelancer as id')
+                    ->where('users.id', $id)
+                    ->get();  
+        $informacionAcademica = DB::table('informacion_academica')->select('*')->where('id_user',$id)->get();                  
+        $informacionLaboral = DB::table('informacion_laboral')->select('*')->where('id_user',$id)->get(); 
+        $habilidades = DB::table('users')
+            ->join('habilidad_freelancer', 'users.id', '=', 'habilidad_freelancer.user')
+            ->join('habilidad', 'habilidad_freelancer.habilidad', '=', 'habilidad.id_habilidad')
+            ->select('users.id as usuario', 'habilidad.titulo as titulo', 'habilidad_freelancer.id_habilidad as id')
+            ->where('users.id', $id)
+            ->get();
+        $habilidad = habilidad::all();         
+        return view('perfil',['informacionusuario'=>$infousuario,
+                                'idiomas'=>$idiomas,
+                                'certificaciones'=>$certificaciones,
+                                'informacionAcademica'=>$informacionAcademica,
+                                'informacionLaboral'=>$informacionLaboral,
+                                'habilidades'=>$habilidades,
+                                'habilidad'=>$habilidad
+                                ]);
+    }
+
     public function guardarImagen(Request $request)
     {   
         /**

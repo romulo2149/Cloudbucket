@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'CloudBucket') }}</title>
 
     <!-- Styles -->
+    <link href="{{asset('img/ico.ico')}}" rel="shortcut icon" type="image/x-icon" />
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -49,10 +50,12 @@
 
                             @if(Auth::user()->rol=='Cliente')
                             <li><a href="{{ route('vistaproyecto') }}"><p class="text-white">Subir Proyecto</p></a></li>
+                            <li><a href="{{ route('buscarProyecto') }}"><p class="text-white">Buscar Proyecto</p></a></li>
                             @endif
 
                             @if(Auth::user()->rol=='Empresa')
                             <li><a href="{{ route('vistaproyecto') }}"><p class="text-white">Subir Proyecto</p></a></li>
+                            <li><a href="{{ route('buscarProyecto') }}"><p class="text-white">Buscar Proyecto</p></a></li>
                             @endif
                         @endguest
                     </ul>

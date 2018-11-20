@@ -5,8 +5,6 @@
 }
 </style>
 @section('content')
-<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link href="{{ asset('css/star-rating.css') }}" rel="stylesheet">
 <link href="{{ asset('css/bootstrap-formhelpers.css') }}" rel="stylesheet">
 <link href="{{ asset('css/languages.css') }}" rel="stylesheet">
