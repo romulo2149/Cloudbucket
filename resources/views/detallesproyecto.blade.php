@@ -89,8 +89,9 @@
                         <h4 class="text-white">Solicitud de {{$solicitudes->username}}   </h4>
                         <p>&nbsp;&nbsp;</p><button style="" onclick="verPerfil({{$solicitudes->id_user}})" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span></button>
                         <p>&nbsp;&nbsp;</p><button style="" onclick="crearChat({{$solicitudes->id_user}})" class="btn btn-primary"><span class="glyphicon glyphicon-comment"></span></button>
-                        <p>&nbsp;&nbsp;</p><button style="" onclick="accion({{$solicitudes->id_user}})" class="btn btn-default"><span class="glyphicon glyphicon-list-alt"></span></button>
+                        <p>&nbsp;&nbsp;</p><button style="" onclick="crearContrato({{$solicitudes->id_solicitud}})" class="btn btn-default"><span class="glyphicon glyphicon-list-alt"></span></button>
                         </div>
+                        
                             <form id="form{{$solicitudes->id_user}}" action="" method="get">
                                 {{ csrf_field() }}  
                                     <input type="hidden" name="id_user" value="{{$solicitudes->id_user}}">
@@ -205,6 +206,13 @@ function verPerfil(i)
 }
 
 function crearChat(i)
+{
+    document.getElementById("form"+i).action = "{{route('crearChat')}}";
+    document.getElementById("form"+i).method = "post";
+    document.getElementById("form"+i).submit();
+}
+
+function crearContrato(i)
 {
     document.getElementById("form"+i).action = "{{route('crearChat')}}";
     document.getElementById("form"+i).method = "post";

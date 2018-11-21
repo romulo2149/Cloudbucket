@@ -18,7 +18,7 @@ class User extends Authenticatable
     protected $dateFormat = 'Y-m-d h:i:s';
     
     protected $fillable = [
-        'name', 'email', 'password', 'rol', 'nombre', 'apellidos', 'nombre_empresa', 'domicilio', 'telefono', 'valoracion', 'fecha_nacimiento', 'sitio_web', 'salario_hora', 'empresa'
+        'name', 'email', 'password', 'rol', 'firma', 'nombre', 'apellidos', 'nombre_empresa', 'domicilio', 'telefono', 'valoracion', 'fecha_nacimiento', 'sitio_web', 'salario_hora', 'empresa'
     ];
 
     /**

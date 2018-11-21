@@ -101,18 +101,7 @@
                         </div>
 
                         <div id="cliente" style="display:none">
-                                <div class="form-group" >
-                                    <label for="nombre" class="col-md-4 control-label">Nombre</label>
-                                    <div class="col-md-6">
-                                        <input id="nombreC" type="text" class="form-control" name="nombre" >
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="apellidos" class="col-md-4 control-label">Apellidos</label>
-                                    <div class="col-md-6">
-                                        <input id="apellidosC" type="text" class="form-control" name="apellidos" >
-                                    </div>
-                                </div>
+                                
                                 <div class="form-group">
                                     <label for="domicilio" class="col-md-4 control-label">Domicilio</label>
                                     <div class="col-md-6">
@@ -134,18 +123,7 @@
                         </div>
 
                         <div id="freelancer" style="display:none">
-                                <div class="form-group" >
-                                    <label for="nombre" class="col-md-4 control-label">Nombre</label>
-                                    <div class="col-md-6">
-                                        <input id="nombreF" type="text" class="form-control" name="nombre" >
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="apellidos" class="col-md-4 control-label">Apellidos</label>
-                                    <div class="col-md-6">
-                                        <input id="apellidosF" type="text" class="form-control" name="apellidos" >
-                                    </div>
-                                </div>
+                                
                                 <div class="form-group">
                                     <label for="sitio" class="col-md-4 control-label">Fecha de Nacimiento</label>
                                     <div class="col-md-6">
@@ -179,18 +157,7 @@
                         </div>
 
                         <div id="empresa" style="display:none">
-                                <div class="form-group" >
-                                    <label for="nombre" class="col-md-4 control-label">Nombre Representante</label>
-                                    <div class="col-md-6">
-                                        <input id="nombreE" type="text" class="form-control" name="nombre" >
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="apellidos" class="col-md-4 control-label">Apellidos Representante</label>
-                                    <div class="col-md-6">
-                                        <input id="apellidosE" type="text" class="form-control" name="apellidos" >
-                                    </div>
-                                </div>
+                               
 
                                 <div class="form-group">
                                     <label for="apellidos" class="col-md-4 control-label">Nombre de Empresa</label>
@@ -268,60 +235,42 @@ function rolUsuario(rol)
     {
         case "cliente" :
             document.getElementById("cliente").style.display = "block";
-                document.getElementById("nombreC").name = "nombre";
-                document.getElementById("apellidosC").name = "apellidos";
                 document.getElementById("telefonoC").name = "telefono";
                 document.getElementById("domicilioC").name = "domicilio";
                 document.getElementById("sitioC").name = "sitio";
             document.getElementById("freelancer").style.display = "none";
-                document.getElementById("nombreF").name = "nombreF";
-                document.getElementById("apellidosF").name = "apellidosF";
                 document.getElementById("telefonoF").name = "telefonoF";
                 document.getElementById("domicilioF").name = "domicilioF";
                 document.getElementById("sitioF").name = "sitioF";
             document.getElementById("empresa").style.display = "none";
-                document.getElementById("nombreE").name = "nombreE";
-                document.getElementById("apellidosE").name = "apellidosE";
                 document.getElementById("telefonoE").name = "telefonoE";
                 document.getElementById("domicilioE").name = "domicilioE";
                 document.getElementById("sitioE").name = "sitioE";
             break;
         case "freelancer" :
             document.getElementById("cliente").style.display = "none";
-                document.getElementById("nombreC").name = "nombreC";
-                document.getElementById("apellidosC").name = "apellidosC";
                 document.getElementById("telefonoC").name = "telefonoC";
                 document.getElementById("domicilioC").name = "domicilioC";
                 document.getElementById("sitioC").name = "sitioC";
             document.getElementById("freelancer").style.display = "block";
-                document.getElementById("nombreF").name = "nombre";
-                document.getElementById("apellidosF").name = "apellidos";
                 document.getElementById("telefonoF").name = "telefono";
                 document.getElementById("domicilioF").name = "domicilio";
                 document.getElementById("sitioF").name = "sitio";
             document.getElementById("empresa").style.display = "none";
-                document.getElementById("nombreE").name = "nombreE";
-                document.getElementById("apellidosE").name = "apellidosE";
                 document.getElementById("telefonoE").name = "telefonoE";
                 document.getElementById("domicilioE").name = "domicilioE";
                 document.getElementById("sitioE").name = "sitioE";
             break;
         case "empresa" :
             document.getElementById("cliente").style.display = "none";
-                document.getElementById("nombreC").name = "nombreC";
-                document.getElementById("apellidosC").name = "apellidosC";
                 document.getElementById("telefonoC").name = "telefonoC";
                 document.getElementById("domicilioC").name = "domicilioC";
                 document.getElementById("sitioC").name = "sitioC";
             document.getElementById("freelancer").style.display = "none";
-                document.getElementById("nombreF").name = "nombreF";
-                document.getElementById("apellidosF").name = "apellidosF";
                 document.getElementById("telefonoF").name = "telefonoF";
                 document.getElementById("domicilioF").name = "domicilioF";
                 document.getElementById("sitioF").name = "sitioF";
             document.getElementById("empresa").style.display = "block";
-                document.getElementById("nombreE").name = "nombre";
-                document.getElementById("apellidosE").name = "apellidos";
                 document.getElementById("telefonoE").name = "telefono";
                 document.getElementById("domicilioE").name = "domicilio";
                 document.getElementById("sitioE").name = "sitio";

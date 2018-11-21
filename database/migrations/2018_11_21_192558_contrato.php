@@ -15,16 +15,16 @@ class Contrato extends Migration
     {
         Schema::create('contrato', function (Blueprint $table){
             $table->increments('id_contrato');
-            $table->string('firma_freelancer');
-            $table->string('firma_cliente');
+            $table->string('firma_freelancer')->nullable();
+            $table->string('firma_cliente')->nullable();
             $table->decimal('pago',10,2);
             $table->date('fecha_entrega');
             $table->integer('penalizacion')->unsigned();    
-            $table->integer('id_proyecto')->unsigned();
+            $table->integer('solicitud')->unsigned();
             $table->timestamps();
             $table->boolean('leido');
-            $table->foreign('id_proyecto')->references('id_proyecto')->on('proyecto')->OnDelete('cascade');
-        });
+            $table->foreign('solicitud')->references('id_solicitud')->on('solicitud')->OnDelete('cascade');
+            });
     }
 
     /**
