@@ -21,8 +21,6 @@ class CreateUsersTable extends Migration
             $table->enum('rol',['Cliente','Freelancer','Empresa']);
             $table->enum('identidad', ['Verificada', 'No Verificada'])->default('No Verificada');
             $table->string('image',200)->nullable();
-            $table->string('nombre')->nullable();
-            $table->string('apellidos')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->string('nombre_empresa')->nullable();
             $table->string('domicilio')->nullable();

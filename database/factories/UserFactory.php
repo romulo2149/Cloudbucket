@@ -18,6 +18,29 @@ $factory->define(App\User::class, function (Faker $faker) {
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'rol' => 'Cliente',
+        'domicilio' => $faker->address,
+        'telefono' => $faker->phoneNumber,
+        'sitio_web' => $faker->domainName,
         'remember_token' => str_random(10),
     ];
 });
+
+/*
+
+Freelancer 
+
+$factory->define(App\User::class, function (Faker $faker) {
+    return [
+        'name' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'rol' => 'Freelancer',
+        'fecha_nacimiento' => $faker->date($format="Y-m-d", $max = "2000-01-01"),
+        'domicilio' => $faker->address,
+        'telefono' => $faker->phoneNumber,
+        'sitio_web' => $faker->domainName,
+        'remember_token' => str_random(10),
+    ];
+});
+*/

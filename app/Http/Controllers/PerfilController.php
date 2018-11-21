@@ -55,7 +55,7 @@ class PerfilController extends Controller
                                 ]);
     }
 
-    public function perfilFreelancer(Request $request)
+    public function verperfil(Request $request)
     {
         $id = $request->id_user;
         $infousuario = DB::table('users')->where('id', $id)->first();

@@ -62,7 +62,13 @@
                         {{ csrf_field() }}
                             <input type="hidden" name="archivo" value="{{$detalles->anexo}}">
                         </form>
-                        <input type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" value="Solicitar Participacion">
+                        @if(Auth::user()->rol=='Freelancer')
+                            @if($solicituduser->isEmpty())
+                                <input type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" value="Solicitar Participacion">
+                            @else
+                                <input type="button" data-toggle="modal" data-target="#myModal2" class="btn btn-primary" value="Ver mi Solicitud">
+                            @endif
+                        @endif
                         <input type="button" onclick="bajarDoc()" class="btn btn-dark" value="Descargar Documento de Requerimientos">
                         </center>
                         </td>
@@ -78,17 +84,18 @@
                 @if(!$solicitudes->isEmpty())
                     @foreach($solicitudes as $solicitudes)
                     
-                        <div style="background-color:black;" class="panel-heading">
-                        <td>
-                        <h4 class="text-white">Solicitud de {{$solicitudes->username}}</h4>
-                            <form id="form{{$solicitudes->id_user}}" action="{{route('perfilFreelancer')}}" method="post">
+                        <div style="background-color:black; position: relative; display:flex;" class="panel-heading">
+                        
+                        <h4 class="text-white">Solicitud de {{$solicitudes->username}}   </h4>
+                        <p>&nbsp;&nbsp;</p><button style="" onclick="verPerfil({{$solicitudes->id_user}})" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span></button>
+                        <p>&nbsp;&nbsp;</p><button style="" onclick="crearChat({{$solicitudes->id_user}})" class="btn btn-primary"><span class="glyphicon glyphicon-comment"></span></button>
+                        <p>&nbsp;&nbsp;</p><button style="" onclick="accion({{$solicitudes->id_user}})" class="btn btn-default"><span class="glyphicon glyphicon-list-alt"></span></button>
+                        </div>
+                            <form id="form{{$solicitudes->id_user}}" action="" method="get">
                                 {{ csrf_field() }}  
                                     <input type="hidden" name="id_user" value="{{$solicitudes->id_user}}">
                             </form>
-                            <button onclick="verPerfil({{$solicitudes->id_user}})" class="btn btn-success"><span class="glyphicon glyphicon-user"></span></button>
-                            <button onclick="verPerfil({{$solicitudes->id_user}})" class="btn btn-success"><span class="glyphicon glyphicon-user"></span></button>
-                        </td>
-                        </div>
+                    
                             <div style="background-color:white;" class="panel-body">
                                 <li><b>Mensaje: </b>{{$solicitudes->mensaje}}</li>
                                 <li><b>Fecha límite respuesta: </b>{{$solicitudes->limite}}</li>
@@ -133,7 +140,33 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="myModal2" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Solicitud enviada a <b> {{$detalles->titulo}} </b></h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('eliminarsolicitud')}}" method="post">
+                    {{csrf_field()}}
+                     {{ method_field('delete') }}
+                    @if(!$solicituduser->isEmpty())
+                        @foreach($solicituduser as $sol)
+                            <b>Mensaje:</b> {{$sol->mensaje}}<br>
+                            <b>Limite:</b> {{$sol->limite}}
+                            <input type="hidden" name="id_solicitud" value="{{$sol->id_solicitud}}">
+                        @endforeach
+                    @endif
+                    <br>
+                    <button type="submit" class="form-control btn btn-default">Eliminar Solicitud</button>
+                    </form>
                 </div>
                 </div>
             </div>
@@ -167,6 +200,14 @@ function bajarDoc()
 
 function verPerfil(i)
 {
+    document.getElementById("form"+i).action = "{{route('verPerfil')}}";
+    document.getElementById("form"+i).submit();
+}
+
+function crearChat(i)
+{
+    document.getElementById("form"+i).action = "{{route('crearChat')}}";
+    document.getElementById("form"+i).method = "post";
     document.getElementById("form"+i).submit();
 }
 

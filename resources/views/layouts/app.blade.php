@@ -18,7 +18,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css')}}">    
 </head>
 <body>
-    <div id="app">
+<div id="app"></div>
+    <div id="app1">
         <nav class="navbar-default navbar-static-top nav">
             <div class="container">                
                 <div class="navbar-header">
@@ -45,17 +46,20 @@
                             &nbsp
                             @else
                             @if(Auth::user()->rol=='Freelancer')
-                            <li><a href="{{ route('buscarProyecto') }}"><p class="text-white">Buscar Proyecto</p></a></li>
+                            <li><a href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span> Bandeja</p></a></li>
+                            <li><a href="{{ route('buscarProyecto') }}"><p class="text-white"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar Proyecto</p></a></li>
                             @endif
 
                             @if(Auth::user()->rol=='Cliente')
+                            <li><a href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span> Bandeja</p></a></li>
                             <li><a href="{{ route('vistaproyecto') }}"><p class="text-white">Subir Proyecto</p></a></li>
-                            <li><a href="{{ route('buscarProyecto') }}"><p class="text-white">Buscar Proyecto</p></a></li>
+                            <li><a href="{{ route('home') }}"><p class="text-white">Buscar Proyecto</p></a></li>
                             @endif
 
                             @if(Auth::user()->rol=='Empresa')
+                            <li><a href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span> Bandeja</p></a></li>
                             <li><a href="{{ route('vistaproyecto') }}"><p class="text-white">Subir Proyecto</p></a></li>
-                            <li><a href="{{ route('buscarProyecto') }}"><p class="text-white">Buscar Proyecto</p></a></li>
+                            <li><a href="{{ route('home') }}"><p class="text-white">Buscar Proyecto</p></a></li>
                             @endif
                         @endguest
                     </ul>
@@ -75,12 +79,12 @@
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a href="{{ route('perfil') }}">
-                                            Perfil
+                                            <span class="glyphicon glyphicon-user"></span> Perfil
                                         </a>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Salir
+                                             <span class="glyphicon glyphicon-log-out"></span> Salir
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

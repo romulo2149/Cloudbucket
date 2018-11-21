@@ -17,11 +17,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'ProyectoController@index')->name('home');
 
 //Rutas del Perfil
 Route::get('/perfil', 'PerfilController@perfil')->name('perfil');
-Route::post('/perfilFreelancer', 'PerfilController@perfilFreelancer')->name('perfilFreelancer');
+Route::get('/verPerfil', 'PerfilController@verperfil')->name('verPerfil');
 Route::post('/perfil/guardarImagen', 'PerfilController@guardarImagen')->name('guardarImagen');
 Route::post('/perfil/cambiarNombre', 'PerfilController@cambiarNombre')->name('cambiarNombre');
 Route::post('/perfil/informacionAcademica', 'PerfilController@informacionAcademica')->name('informacionAcademica');
@@ -42,3 +42,10 @@ Route::post('buscar', 'ProyectoController@ShowProject')->name('mostrarProyecto')
 Route::get('/detallesproyectofreelancer', 'ProyectoController@projectdetailsfreelancer')->name('detallesproyectofreelancer');
 Route::post('/descargarArchivo', 'ProyectoController@download')->name('descargarArchivo');
 Route::post('/enviarsolicitud', 'SolicitudController@subir')->name('enviarsolicitud');
+Route::delete('/eliminarsolicitud', 'SolicitudController@eliminar')->name('eliminarsolicitud');
+
+Route::get('/chat', 'ChatController@show')->name('chat');
+Route::post('/crearChat', 'ChatController@crear')->name('crearChat');
+Route::post('/nuevoMensaje', 'ChatController@nuevoMensaje')->name('nuevoMensaje');
+Route::get('/listaMensajes', 'ChatController@listaMensajes')->name('listaMensajes');
+

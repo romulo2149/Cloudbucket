@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
 
-    protected $dateFormat = 'M j Y h:i:s';
+    protected $dateFormat = 'Y-m-d h:i:s';
     
     protected $fillable = [
         'name', 'email', 'password', 'rol', 'nombre', 'apellidos', 'nombre_empresa', 'domicilio', 'telefono', 'valoracion', 'fecha_nacimiento', 'sitio_web', 'salario_hora', 'empresa'
@@ -29,4 +29,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public $timestamps = false;
 }

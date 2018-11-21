@@ -106,11 +106,11 @@ class ProyectoController extends Controller
         $solicitudes = DB::table('solicitud')->join('users', 'users.id', '=', 'solicitud.id_user')->select('users.name as username', 'solicitud.mensaje as mensaje', 'solicitud.limite as limite', 'solicitud.id_proyecto as id_proyecto', 'solicitud.id_user as id_user')->where('id_proyecto',$idproyecto)->get();
         $etiquetas = DB::table('habilidad_proyecto')->join('habilidad', 'habilidad_proyecto.id_habilidad', '=', 'habilidad.id_habilidad')
         ->select('habilidad.titulo as nombre')->where('id_proyecto', $idproyecto)->get();
-     //   $propuestauser = DB::table('propuesta')->select('*')->where([['user','=',$id],['proyecto','=',$idproyecto]])->get();
+        $solicituduser = DB::table('solicitud')->select('*')->where([['id_user','=',$id],['id_proyecto','=',$idproyecto]])->get();
         $detalles = DB::table('proyecto')->join('areas','proyecto.area','=','areas.id_area')->join('users','proyecto.usuario','=','users.id')
         ->select('proyecto.id_proyecto as id_proyecto','proyecto.titulo as titulo', 'proyecto.descripcion as descripcion', 'proyecto.presupuesto as presupuesto', 'proyecto.anexo as anexo', 'proyecto.estatus as estatus', 'proyecto.tiempo as tiempo', 'areas.titulo as area', 'users.name as nombre')
         ->where('proyecto.id_proyecto',$idproyecto)->get();
-        return view('detallesproyecto',['solicitudes' => $solicitudes, 'detalles'=>$detalles,'etiquetas'=>$etiquetas, 'progresos' => $progresos]);
+        return view('detallesproyecto',['solicitudes' => $solicitudes, 'detalles'=>$detalles,'etiquetas'=>$etiquetas, 'progresos' => $progresos, 'solicituduser' => $solicituduser]);
     }
 
     public function download(Request $request){
@@ -118,5 +118,11 @@ class ProyectoController extends Controller
         $direccionImagen=base_path().'/public/anexos/'; 
         $pathToFile = $direccionImagen.$archivo;
         return response()->download($pathToFile);
+    }
+
+    public function index()
+    {
+        $proyecto = DB::table('proyecto')->where('usuario',Auth::user()->id)->get();
+        return view('home')->with('proyecto',$proyecto);
     }
 }

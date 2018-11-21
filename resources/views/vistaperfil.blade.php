@@ -74,11 +74,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                <center>
-                                   
-                                        <button id="guardarImagen" type="submit" class="btn btn-primary form-control"  style="width:60%">Cambiar Imagen</button>
-                                   
-                                </center>
+                                
                                 </div>       
                             <!-- Image -->   
 
@@ -111,9 +107,7 @@
                                           
                             
                             <div class="form-group">
-                                <center>                                   
-                                    <button id="guardarImagen" type="submit" class="btn btn-primary form-control"  style="width:60%">Cambiar Nombre</button>                                   
-                                </center>
+                                
                             </div> 
                         </form>                 
 
@@ -140,15 +134,13 @@
                                         <span class="input-group-addon">
                                         <i class="fas fa-phone"  aria-hidden="true"></i>
                                         </span>
-                                        <input type="text" value="{{$informacionusuario->telefono}}" maxlength="10" minlength="7" class="form-control" id="phone" name="phone" required/>
+                                        <input type="text" value="{{$informacionusuario->telefono}}" maxlength="10" minlength="7" class="form-control" id="phone" name="phone" required readonly/>
                                     </div>                                 
                                 </div> 
                             </div>                           
                     
                             <div class="form-group">
-                                <center>                                   
-                                    <button id="guardarSueldo" type="submit" class="btn btn-primary form-control"  style="width:80%">Actualizar Telefono</button>                                   
-                                </center>
+                               
                             </div> 
                     </form>   
 
@@ -159,7 +151,6 @@
     </div>
 </div>
 
-@if(Auth::user()->rol=='Freelancer')
 
 <div class="container">
     <div class="row">
@@ -196,7 +187,7 @@
                                                 ><i class="fas fa-pen-square fa-2x"  aria-hidden="true"></i></button>                                                
                                             </td>                                        
                                             <td>
-                                                <button id="EliminarInformacionAcademica" class="btn btn-default" name="{{$informacionAcademica->id_laboral}}"><i class="fa fa-trash-alt fa-2x icondelete"  aria-hidden="true"></i></button>
+                                                
                                             </td>          
                                         </tr>
                                     @endforeach
@@ -206,9 +197,7 @@
                         </table>
                         
                         <div class="form-group">
-                            <center>                                   
-                                <button id="nuevaInformacionAcademica" class="btn btn-primary form-control"  style="width:80%" data-toggle="modal" data-target="#NuevaInformacionAcademicaModal">Agregar Informacion Academica</button>
-                            </center>
+                            
                         </div>    
 
                     </div>
@@ -234,15 +223,13 @@
                                         <span class="input-group-addon">
                                         <i class="fas fa-dollar-sign"  aria-hidden="true"></i>
                                         </span>
-                                        <input type="number" value="{{$informacionusuario->salario_hora}}" min="0.00" step="1.00" data-number-to-fixed="2.00" data-number-stepfactor="100" class="form-control currency" id="sueldo" name="sueldo" />
+                                        <input type="number" value="{{$informacionusuario->salario_hora}}" min="0.00" step="1.00" data-number-to-fixed="2.00" data-number-stepfactor="100" class="form-control currency" id="sueldo" name="sueldo" readonly/>
                                     </div>                                 
                                 </div> 
                             </div>                           
                     
                             <div class="form-group">
-                                <center>                                   
-                                    <button id="guardarSueldo" type="submit" class="btn btn-primary form-control"  style="width:80%">Actualizar Sueldo</button>                                   
-                                </center>
+                               
                             </div> 
                     </form>                      
                     <hr class="my-4">                    
@@ -275,7 +262,7 @@
                                                 ><i class="fas fa-pen-square fa-2x"  aria-hidden="true"></i></button>                                                
                                             </td>                                        
                                             <td>
-                                                <button id="EliminarInformacionLaboral" class="btn btn-default" name="{{$informacionLaboral->id_laboral}}"><i class="fa fa-trash-alt fa-2x icondelete"  aria-hidden="true"></i></button>
+                                                
                                             </td>          
                                         </tr>
                                     @endforeach
@@ -285,9 +272,7 @@
                         </table>
 
                         <div class="form-group">
-                        <center>                                   
-                            <button id="NuevaInformacionLaboral" class="btn btn-primary form-control"  style="width:80%" data-toggle="modal" data-target="#NuevaInformacionLaboralModal">Agregar Informacion Laboral</button>
-                        </center>
+                       
                         </div>    
                     </div>
                 </div>
@@ -466,7 +451,6 @@
     </div>
 </div>
 
-@endif
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
 <script src="//geodata.solutions/includes/countrystate.js"></script>
 <script src="{{ asset('js/bootstrap-formhelpers.js') }}"></script>
