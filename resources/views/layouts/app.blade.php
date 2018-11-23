@@ -22,7 +22,7 @@
     <div id="app1">
         <nav class="navbar-default navbar-static-top nav">
             <div class="container">                
-                <div class="navbar-header">
+                <div style="width:500px;" class="navbar-header">
 
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
@@ -48,18 +48,19 @@
                             @if(Auth::user()->rol=='Freelancer')
                             <li><a href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span> Bandeja</p></a></li>
                             <li><a href="{{ route('buscarProyecto') }}"><p class="text-white"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar Proyecto</p></a></li>
+                            <li><a href="{{ route('home') }}"><p class="text-white"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Mis Proyectos</p></a></li>
                             @endif
 
                             @if(Auth::user()->rol=='Cliente')
                             <li><a href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span> Bandeja</p></a></li>
-                            <li><a href="{{ route('vistaproyecto') }}"><p class="text-white">Subir Proyecto</p></a></li>
-                            <li><a href="{{ route('home') }}"><p class="text-white">Buscar Proyecto</p></a></li>
+                            <li><a href="{{ route('vistaproyecto') }}"><p class="text-white"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Subir Proyecto</p></a></li>
+                            <li><a href="{{ route('home') }}"><p class="text-white"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Mis Proyectos</p></a></li>
                             @endif
 
                             @if(Auth::user()->rol=='Empresa')
                             <li><a href="{{route('chat')}}"><p class="text-white"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span> Bandeja</p></a></li>
-                            <li><a href="{{ route('vistaproyecto') }}"><p class="text-white">Subir Proyecto</p></a></li>
-                            <li><a href="{{ route('home') }}"><p class="text-white">Buscar Proyecto</p></a></li>
+                            <li><a href="{{ route('vistaproyecto') }}"><p class="text-white"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Subir Proyecto</p></a></li>
+                            <li><a href="{{ route('home') }}"><p class="text-white"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Mis Proyectos</p></a></li>
                             @endif
                         @endguest
                     </ul>

@@ -26,6 +26,7 @@ class ProyectoController extends Controller
     	$proyecto->descripcion = $request->descripcion; 
     	$proyecto->presupuesto = $request->presupuesto;
         $proyecto->tiempo = $request->tiempo;
+        $proyecto->estatus = 'Publicado';
         $proyecto->usuario = Auth::user()->id;
         $path = 'anexos';
         if($request->hasFile('anexo'))
@@ -64,7 +65,8 @@ class ProyectoController extends Controller
                 $etiqueta->save();
             }
         } 
-    	return view('home');
+    	$proyecto = DB::table('proyecto')->where('usuario',Auth::user()->id)->get();
+        return view('home')->with('proyecto',$proyecto);
         
     }   
 
@@ -84,7 +86,7 @@ class ProyectoController extends Controller
         $etiquetas = habilidad::all();
         
         if($request->habilidades == ''){
-            $proyectos = DB::table('proyecto')->where('titulo','like',"%".$request->searchName."%")->get();
+            $proyectos = DB::table('proyecto')->where('titulo','like',"%".$request->searchName."%")->where('estatus','Publicado')->get();
             
             return view('buscarproyecto')->with('proyecto',$proyectos)->with('etiquetas',$etiquetas);
         }
@@ -103,7 +105,7 @@ class ProyectoController extends Controller
         $id = Auth::user()->id;
         $idproyecto = $request->data;
         $progresos = DB::table('progreso')->where('id_proyecto',$idproyecto)->get();
-        $solicitudes = DB::table('solicitud')->join('users', 'users.id', '=', 'solicitud.id_user')->select('users.name as username', 'solicitud.mensaje as mensaje', 'solicitud.limite as limite', 'solicitud.id_proyecto as id_proyecto', 'solicitud.id_user as id_user')->where('id_proyecto',$idproyecto)->get();
+        $solicitudes = DB::table('solicitud')->join('users', 'users.id', '=', 'solicitud.id_user')->select('users.name as username', 'solicitud.mensaje as mensaje', 'solicitud.id_solicitud as id_solicitud', 'solicitud.limite as limite', 'solicitud.id_proyecto as id_proyecto', 'solicitud.id_user as id_user', 'solicitud.estatus as estatus')->where('id_proyecto',$idproyecto)->get();
         $etiquetas = DB::table('habilidad_proyecto')->join('habilidad', 'habilidad_proyecto.id_habilidad', '=', 'habilidad.id_habilidad')
         ->select('habilidad.titulo as nombre')->where('id_proyecto', $idproyecto)->get();
         $solicituduser = DB::table('solicitud')->select('*')->where([['id_user','=',$id],['id_proyecto','=',$idproyecto]])->get();
@@ -123,6 +125,14 @@ class ProyectoController extends Controller
     public function index()
     {
         $proyecto = DB::table('proyecto')->where('usuario',Auth::user()->id)->get();
-        return view('home')->with('proyecto',$proyecto);
+        $solicitudes = DB::table('solicitud')->where('id_user',Auth::user()->id)->get();
+        $contratos = DB::table('solicitud')->join('contrato', 'contrato.solicitud', '=', 'solicitud.id_solicitud')->select('contrato.id_contrato as id', 'solicitud.id_solicitud as id_solicitud')->where('id_user', Auth::user()->id)->get();
+
+        return view('home')->with(['proyecto' => $proyecto, 'solicitudes' => $solicitudes, 'contratos' => $contratos]);
+    }
+
+    public function work(Request $request)
+    {
+        echo $request->data;
     }
 }

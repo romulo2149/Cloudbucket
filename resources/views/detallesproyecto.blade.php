@@ -18,13 +18,13 @@
                             <li><b>Tiempo estimado de desarrollo: </b>{{$detalles->tiempo}}</li>
 
                             @if($detalles->estatus =='Publicado')
-                            <li><b>Estatus del Proyecto: </b><i style="font-size:24px" class="fa">&#xf1ea;</i>  {{$detalles->estatus}}</li>
+                            <li><b>Estatus del Proyecto: </b>  {{$detalles->estatus}}</li>
                             @elseif($detalles->estatus == 'En Desarrollo')
-                            <li><b>Estatus del Proyecto: </b><i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>  {{$detalles->estatus}}</li>
+                            <li><b>Estatus del Proyecto: </b>  {{$detalles->estatus}}</li>
                             @elseif($detalles->estatus == 'Terminado')
-                            <li><b>Estatus del Proyecto: </b><i style="font-size:24px" class="fa">&#xf11e;</i>  {{$detalles->estatus}}</li>
+                            <li><b>Estatus del Proyecto: </b> {{$detalles->estatus}}</li>
                             @elseif($detalles->estatus == 'Cancelado')
-                            <li><b>Estatus del Proyecto: </b><i style="font-size:24px" class="fa">&#xf05e;</i>  {{$detalles->estatus}}</li>
+                            <li><b>Estatus del Proyecto: </b>  {{$detalles->estatus}}</li>
                             @endif
                         </ul>          
                         <p><b>Descripción General: </b>{{$detalles->descripcion}}</p>
@@ -64,9 +64,13 @@
                         </form>
                         @if(Auth::user()->rol=='Freelancer')
                             @if($solicituduser->isEmpty())
-                                <input type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" value="Solicitar Participacion">
+                                @if($detalles->estatus == 'Publicado')
+                                    <input type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" value="Solicitar Participacion">
+                                @endif
                             @else
-                                <input type="button" data-toggle="modal" data-target="#myModal2" class="btn btn-primary" value="Ver mi Solicitud">
+                                @if($detalles->estatus == 'Publicado')
+                                    <input type="button" data-toggle="modal" data-target="#myModal2" class="btn btn-primary" value="Ver mi Solicitud">
+                                @endif
                             @endif
                         @endif
                         <input type="button" onclick="bajarDoc()" class="btn btn-dark" value="Descargar Documento de Requerimientos">
@@ -89,17 +93,21 @@
                         <h4 class="text-white">Solicitud de {{$solicitudes->username}}   </h4>
                         <p>&nbsp;&nbsp;</p><button style="" onclick="verPerfil({{$solicitudes->id_user}})" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span></button>
                         <p>&nbsp;&nbsp;</p><button style="" onclick="crearChat({{$solicitudes->id_user}})" class="btn btn-primary"><span class="glyphicon glyphicon-comment"></span></button>
-                        <p>&nbsp;&nbsp;</p><button style="" onclick="crearContrato({{$solicitudes->id_solicitud}})" class="btn btn-default"><span class="glyphicon glyphicon-list-alt"></span></button>
+                        @if($solicitudes->estatus != 'Rechazada' && $solicitudes->estatus != 'Aceptada')
+                            <p>&nbsp;&nbsp;</p><button style="" onclick="crearContrato({{$solicitudes->id_user}})" class="btn btn-default"><span class="glyphicon glyphicon-list-alt"></span></button>
+                        @endif
                         </div>
                         
                             <form id="form{{$solicitudes->id_user}}" action="" method="get">
                                 {{ csrf_field() }}  
                                     <input type="hidden" name="id_user" value="{{$solicitudes->id_user}}">
+                                    <input type="hidden" name="id_solicitud" value="{{$solicitudes->id_solicitud}}">
                             </form>
                     
                             <div style="background-color:white;" class="panel-body">
                                 <li><b>Mensaje: </b>{{$solicitudes->mensaje}}</li>
                                 <li><b>Fecha límite respuesta: </b>{{$solicitudes->limite}}</li>
+                                <li><b>Estatus: </b>{{$solicitudes->estatus}}</li>
                             </div>
                             <br>
                     @endforeach
@@ -214,7 +222,7 @@ function crearChat(i)
 
 function crearContrato(i)
 {
-    document.getElementById("form"+i).action = "{{route('crearChat')}}";
+    document.getElementById("form"+i).action = "{{route('crearContrato')}}";
     document.getElementById("form"+i).method = "post";
     document.getElementById("form"+i).submit();
 }

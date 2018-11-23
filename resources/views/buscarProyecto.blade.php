@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-14">
             <div class="panel panel-default">
-                <div class="panel-heading">Buscar Proyecto</div>
+                <div class="panel-heading"><p class="text-white">Buscar Proyectos</p></div>
                 <div class="panel-body" id="imprimir">
                             <header>
                                 <div class="container">

@@ -7,6 +7,7 @@ use App\Habilidad_Proyecto;
 use App\Area;
 use App\Habilidad;
 use App\Proyecto;
+use App\Contrato;
 use App\Progreso;
 use App\Solicitud;
 use Illuminate\Support\Facades\Redirect;
@@ -62,6 +63,66 @@ class SolicitudController extends Controller
 
     public function crearContrato(Request $request)
     {
+        $datosContrato = DB::table('solicitud')->join('proyecto', 'proyecto.id_proyecto', '=', 'solicitud.id_proyecto')->select('proyecto.presupuesto as pago', 'solicitud.id_solicitud as id_solicitud', 'proyecto.titulo as nombre')->where('id_solicitud',$request->id_solicitud)->get();
+        return view('contrato')->with(['datosContrato' => $datosContrato]);
+    }
+
+    public function subirContrato(Request $request)
+    {
+        $contrato = new contrato;
+        $id = Auth::user()->id;
+        $firma = DB::table('users')->select('*')->where([['id','=',$id],['firma','=', $request->firma_cliente]])->get();
+        if(!$firma->isEmpty())
+        {
+            $contrato->solicitud = $request->solicitud;
+            $contrato->firma_cliente = $request->firma_cliente;
+            $contrato->pago = $request->pago;
+            $contrato->fecha_entrega = $request->fecha_entrega;
+            $contrato->penalizacion = $request->penalizacion;
+            $contrato->leido = 0;
+            $contrato->save();
+            $proyecto = DB::table('proyecto')->where('usuario',Auth::user()->id)->get();
+            $solicitudes = DB::table('solicitud')->where('id_user',Auth::user()->id)->get();
+            return view('home')->with(['proyecto' => $proyecto, 'solicitudes' => $solicitudes]);
+        }
+        else
+        {
+            echo 'firma invalida';
+        }
+    
+    }
+
+    public function firmar(Request $request)
+    {
+        $datosContrato = DB::table('contrato')->where('id_contrato',$request->data)->get();
+        return view('firmarcontrato')->with(['datosContrato' => $datosContrato]);
+    }
+
+    public function trato(Request $request)
+    {
+        $id = Auth::user()->id;
+        $firma = DB::table('users')->select('*')->where([['id','=',$id],['firma','=', $request->firma_freelancer]])->get();
+        $proyecto = DB::table('solicitud')->select('*')->where('id_solicitud', $request->solicitud)->first();
+        DB::table('solicitud')->where('id_proyecto',$proyecto->id_proyecto)->update(['estatus' => 'Rechazada']);
+        DB::table('solicitud')->where('id_solicitud',$request->solicitud)->update(['estatus' => 'Aceptada']);
+        DB::table('proyecto')->where('id_proyecto',$proyecto->id_proyecto)->update(['estatus' => 'En Desarrollo']);
         
+       /* if(!$firma->isEmpty())
+        {
+            $cont = Contrato::find($request->id_contrato);
+
+            $cont->firma_freelancer = $request->firma_freelancer;
+
+            $cont->save();
+            $proyecto = DB::table('proyecto')->where('usuario',Auth::user()->id)->get();
+            $solicitudes = DB::table('solicitud')->where('id_user',Auth::user()->id)->get();
+            $contratos = DB::table('solicitud')->join('contrato', 'contrato.solicitud', '=', 'solicitud.id_solicitud')->select('contrato.id_contrato as id', 'solicitud.id_solicitud as id_solicitud')->where('id_user', Auth::user()->id)->get();
+
+        return view('home')->with(['proyecto' => $proyecto, 'solicitudes' => $solicitudes, 'contratos' => $contratos]);
+        }
+        else
+        {
+            echo 'firma incorrecta';
+        }*/
     }
 }

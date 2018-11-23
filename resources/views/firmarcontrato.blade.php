@@ -5,9 +5,11 @@
 @if($datosContrato)
 
     @foreach($datosContrato as $dato)
-    <form action="{{route('subirContrato')}}" method="post">
-    {{ csrf_field() }}  
-        <input type="hidden" name="solicitud" class="form-control" value="{{$dato->id_solicitud}}">
+    <form action="{{route('tratoContrato')}}" method="post">
+    {{ csrf_field() }} 
+    {{ method_field('put') }} 
+        <input type="hidden" name="id_contrato" class="form-control" value="{{$dato->id_contrato}}">
+        <input type="hidden" name="solicitud" class="form-control" value="{{$dato->solicitud}}">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
@@ -19,32 +21,32 @@
                                 <div class="row">
                                     <div class="col-md-10 col-md-offset-1">
                                         <div class="spacing50"></div>
-                                        Contrato entre partes para la realización del proyecto tecnológico <b>{{$dato->nombre}}</b>.
+                                        Contrato entre partes para la realización del proyecto tecnológico.
                                     </div>
                                 </div>
                                 <div class="spacing50"></div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label for="" class="form-group">Presupuesto:</label>
-                                        <input type="text" name="pago" class="form-control" value="{{$dato->pago}}">
+                                        <input type="text" name="pago" class="form-control" value="{{$dato->pago}}" readonly>
                                         <br>
                                         <label for="" class="form-group">Penalización:</label>
-                                        <div style="display:flex;"><input name="penalizacion" type="text" style="width:50%;" class="form-control" placeholder="Porcentaje"> <p style="align:center; padding-top:7px;">%</p></div>
+                                        <div style="display:flex;"><input name="penalizacion" type="text" style="width:50%;" class="form-control" value="{{$dato->penalizacion}}" readonly> <p style="align:center; padding-top:7px;">%</p></div>
                                     </div>
                                     <div class="col-md-8">
                                         <label for="" class="form-group">Fecha de Entrega:</label>
-                                        <input type="date" name="fecha_entrega" class="form-control">
+                                        <input type="date" name="fecha_entrega" value="{{$dato->fecha_entrega}}" class="form-control" readonly>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="spacing50"></div>
                                     <div class="col-md-6">
                                         <label for="" class="form-group">Firma del Freelancer:</label>
-                                        <input type="text" class="form-control" placeholder="Firma Aquí" readonly>
+                                        <input type="text" class="form-control" name="firma_freelancer" placeholder="Firma Aquí">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="" class="form-group">Firma del Cliente:</label>
-                                        <input type="text" name="firma_cliente" class="form-control" placeholder="Firma Aquí">
+                                        <input type="text" name="firma_cliente" class="form-control" value="***********" readonly>
                                     </div>
                                 </div>
                                 <div class="row">

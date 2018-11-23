@@ -43,6 +43,11 @@ Route::get('/detallesproyectofreelancer', 'ProyectoController@projectdetailsfree
 Route::post('/descargarArchivo', 'ProyectoController@download')->name('descargarArchivo');
 Route::post('/enviarsolicitud', 'SolicitudController@subir')->name('enviarsolicitud');
 Route::delete('/eliminarsolicitud', 'SolicitudController@eliminar')->name('eliminarsolicitud');
+Route::post('/crearContrato', 'SolicitudController@crearContrato')->name('crearContrato');
+Route::post('/subirContrato', 'SolicitudController@subirContrato')->name('subirContrato');
+Route::get('/firmarFreelancer', 'SolicitudController@firmar')->name('firmar');
+Route::put('/tratoContrato', 'SolicitudController@trato')->name('tratoContrato');
+Route::get('/workspace', 'ProyectoController@work')->name('workspace');
 
 Route::get('/chat', 'ChatController@show')->name('chat');
 Route::post('/crearChat', 'ChatController@crear')->name('crearChat');
