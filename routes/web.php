@@ -47,6 +47,7 @@ Route::post('/crearContrato', 'SolicitudController@crearContrato')->name('crearC
 Route::post('/subirContrato', 'SolicitudController@subirContrato')->name('subirContrato');
 Route::get('/firmarFreelancer', 'SolicitudController@firmar')->name('firmar');
 Route::put('/tratoContrato', 'SolicitudController@trato')->name('tratoContrato');
+Route::get('/verContrato', 'SolicitudController@firmar')->name('verContrato');
 Route::get('/workspace', 'ProyectoController@work')->name('workspace');
 
 Route::get('/chat', 'ChatController@show')->name('chat');

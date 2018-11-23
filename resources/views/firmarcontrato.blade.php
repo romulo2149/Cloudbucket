@@ -40,10 +40,17 @@
                                 </div>
                                 <div class="row">
                                     <div class="spacing50"></div>
+                                    @if($dato->firma_freelancer == null)
                                     <div class="col-md-6">
                                         <label for="" class="form-group">Firma del Freelancer:</label>
                                         <input type="text" class="form-control" name="firma_freelancer" placeholder="Firma Aquí">
                                     </div>
+                                    @else
+                                    <div class="col-md-6">
+                                        <label for="" class="form-group">Firma del Freelancer:</label>
+                                        <input type="text" name="firma_freelancer" class="form-control" value="***********" readonly>
+                                    </div>
+                                    @endif
                                     <div class="col-md-6">
                                         <label for="" class="form-group">Firma del Cliente:</label>
                                         <input type="text" name="firma_cliente" class="form-control" value="***********" readonly>
@@ -51,9 +58,15 @@
                                 </div>
                                 <div class="row">
                                 <div class="spacing50"></div>
+                                @if($dato->firma_freelancer == null)
                                     <div class="col-md-10 col-md-offset-1">
                                         <input type="submit" class="form-control btn btn-info" value="Enviar Contrato">
                                     </div>
+                                @else
+                                    <div class="col-md-10 col-md-offset-1">
+                                        <input onclick="history.go(-1);" class="form-control btn btn-info" value="Volver">
+                                    </div>
+                                @endif
                                 </div>
                         </div>
                     </div>

@@ -46,20 +46,7 @@
                                 
                             <!--Calificacion de estrellas-->                             
 
-                                <div class="form-group ">
-                                <label class="col-sm-2 control-label">Imagen de Perfil</label>
-                                    <div class="col-lg-10 col-sm-10 col-10">
-                                        <div class="input-group">
-                                            <label class="input-group-btn">
-                                                <span class="btn btn-primary">
-                                                    Seleccionar Archivo&hellip; 
-                                                    <input type="file" style="display: none;" name="imagen" accept="image/*" required>
-                                                </span>
-                                            </label>
-                                            <input type="text" class="form-control" value="{{$informacionusuario->image}}" readonly>                        
-                                        </div> 
-                                    </div>
-                                </div>  
+                                
 
                                 <div class="form-group{{ $errors->has('imagen') ? ' has-error' : '' }}">
                                 <center>

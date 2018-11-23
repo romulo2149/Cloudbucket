@@ -80,7 +80,7 @@ class PerfilController extends Controller
             ->where('users.id', $id)
             ->get();
         $habilidad = habilidad::all();         
-        return view('perfil',['informacionusuario'=>$infousuario,
+        return view('vistaperfil',['informacionusuario'=>$infousuario,
                                 'idiomas'=>$idiomas,
                                 'certificaciones'=>$certificaciones,
                                 'informacionAcademica'=>$informacionAcademica,
