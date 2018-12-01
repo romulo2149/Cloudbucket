@@ -81,9 +81,17 @@ class SolicitudController extends Controller
             $contrato->penalizacion = $request->penalizacion;
             $contrato->leido = 0;
             $contrato->save();
-            $proyecto = DB::table('proyecto')->where('usuario',Auth::user()->id)->get();
-            $solicitudes = DB::table('solicitud')->where('id_user',Auth::user()->id)->get();
-            return view('home')->with(['proyecto' => $proyecto, 'solicitudes' => $solicitudes]);
+            $proyecto = DB::table('proyecto')->where('usuario', Auth::user()->id)->get();
+        $num[] = ['id_proyecto' => 0, 'solicitudes' => 0];
+        foreach ($proyecto as $p) 
+        {
+            $numeroSolicitudes = DB::table('solicitud')->where('id_proyecto',$p->id_proyecto)->count();
+            $num[] = ['id_proyecto' => $p->id_proyecto, 'solicitudes' => $numeroSolicitudes];
+
+        }
+        $solicitudes = DB::table('solicitud')->join('proyecto', 'proyecto.id_proyecto', '=', 'solicitud.id_proyecto')->select('proyecto.titulo as titulo', 'solicitud.mensaje as mensaje', 'solicitud.limite as limite', 'solicitud.estatus as estatus', 'solicitud.id_proyecto as id_proyecto')->where('id_user',Auth::user()->id)->get();
+        $contratos = DB::table('solicitud')->join('contrato', 'contrato.solicitud', '=', 'solicitud.id_solicitud')->join('proyecto', 'proyecto.id_proyecto', '=', 'solicitud.id_proyecto')->select('proyecto.titulo as titulo','contrato.firma_freelancer as firma', 'contrato.id_contrato as id', 'solicitud.id_solicitud as id_solicitud')->where('id_user', Auth::user()->id)->get();
+        return view('home')->with(['proyecto' => $proyecto, 'solicitudes' => $solicitudes, 'contratos' => $contratos, 'num' => $num]);
         }
         else
         {
@@ -115,15 +123,16 @@ class SolicitudController extends Controller
 
             $cont->save();
             $proyecto = DB::table('proyecto')->where('usuario', Auth::user()->id)->get();
-            foreach ($proyecto as $p) 
-            {
-                $numeroSolicitudes = DB::table('solicitud')->where('id_proyecto',$p->id_proyecto)->count();
-                $num[] = ['id_proyecto' => $p->id_proyecto, 'solicitudes' => $numeroSolicitudes];
+        $num[] = ['id_proyecto' => 0, 'solicitudes' => 0];
+        foreach ($proyecto as $p) 
+        {
+            $numeroSolicitudes = DB::table('solicitud')->where('id_proyecto',$p->id_proyecto)->count();
+            $num[] = ['id_proyecto' => $p->id_proyecto, 'solicitudes' => $numeroSolicitudes];
 
-            }
-            $solicitudes = DB::table('solicitud')->join('proyecto', 'proyecto.id_proyecto', '=', 'solicitud.id_proyecto')->select('proyecto.titulo as titulo', 'solicitud.mensaje as mensaje', 'solicitud.limite as limite', 'solicitud.estatus as estatus', 'solicitud.id_proyecto as id_proyecto')->where('id_user',Auth::user()->id)->get();
-            $contratos = DB::table('solicitud')->join('contrato', 'contrato.solicitud', '=', 'solicitud.id_solicitud')->join('proyecto', 'proyecto.id_proyecto', '=', 'solicitud.id_proyecto')->select('proyecto.titulo as titulo','contrato.firma_freelancer as firma', 'contrato.id_contrato as id', 'solicitud.id_solicitud as id_solicitud')->where('id_user', Auth::user()->id)->get();
-            return view('home')->with(['proyecto' => $proyecto, 'solicitudes' => $solicitudes, 'contratos' => $contratos, 'num' => $num]);
+        }
+        $solicitudes = DB::table('solicitud')->join('proyecto', 'proyecto.id_proyecto', '=', 'solicitud.id_proyecto')->select('proyecto.titulo as titulo', 'solicitud.mensaje as mensaje', 'solicitud.limite as limite', 'solicitud.estatus as estatus', 'solicitud.id_proyecto as id_proyecto')->where('id_user',Auth::user()->id)->get();
+        $contratos = DB::table('solicitud')->join('contrato', 'contrato.solicitud', '=', 'solicitud.id_solicitud')->join('proyecto', 'proyecto.id_proyecto', '=', 'solicitud.id_proyecto')->select('proyecto.titulo as titulo','contrato.firma_freelancer as firma', 'contrato.id_contrato as id', 'solicitud.id_solicitud as id_solicitud')->where('id_user', Auth::user()->id)->get();
+        return view('home')->with(['proyecto' => $proyecto, 'solicitudes' => $solicitudes, 'contratos' => $contratos, 'num' => $num]);
         }
         else
         {

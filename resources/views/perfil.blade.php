@@ -467,6 +467,359 @@
 </div>
 
 @endif
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="color:white">Tarjetas</div>
+                    <div class="panel-body">
+                        
+                        <h3 style="text-align:center">Mis tarjetas</h3>   
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Operador</th>
+                                <th>Numero</th>                                 
+                                <th>Terminacion</th>  
+                            </tr>
+                            </thead>
+                            <tbody>                            
+                            @if($tarjetas)
+                                    @foreach($tarjetas as $tarjeta)                                    
+                                        <tr>                                                
+                                            <td>{{$tarjeta->operador}}</td>
+                                            <td>**** **** **** ****</td>                                                                                                                           
+                                            <td>{{$tarjeta->terminacion}}</td>                                                
+                                        </tr>
+                                    @endforeach
+                                @else                                    
+                            @endif                   
+                            </tbody>
+                        </table>
+                        
+                        <div class="form-group">
+                            <center>                                   
+                                <button id="nuevaInformacionAcademica" class="btn btn-primary form-control"  style="width:80%" data-toggle="modal" data-target="#TarjetaModal">Agregar tarjeta</button>
+                            </center>
+                        </div>    
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="color:white">Transferencias</div>
+                    <div class="panel-body">
+                        
+                        <h3 style="text-align:center">Mis datos de transferencia</h3>   
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Banco</th>
+                                <th>Sucursal</th>                                 
+                                <th>Cliente</th>  
+                            </tr>
+                            </thead>
+                            <tbody>                            
+                            @if($transferencias)
+                                    @foreach($transferencias as $t)                                    
+                                        <tr>                                                
+                                            <td>{{$t->nombre_banco}}</td>
+                                            <td>{{$t->numero_sucursal}}</td>                                                                                                                           
+                                            <td>{{$t->nombre_cliente}}</td>                                                
+                                        </tr>
+                                    @endforeach
+                                @else                                    
+                            @endif                   
+                            </tbody>
+                        </table>
+                        
+                        <div class="form-group">
+                            <center>                                   
+                                <button id="nuevaInformacionAcademica" class="btn btn-primary form-control"  style="width:80%" data-toggle="modal" data-target="#TransModal">Agregar transferencia</button>
+                            </center>
+                        </div>    
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="color:white">Ewallets</div>
+                    <div class="panel-body">
+                        
+                        <h3 style="text-align:center">Mis carteras</h3>   
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Operador</th>
+                                <th>Cuenta</th> 
+                            </tr>
+                            </thead>
+                            <tbody>                            
+                            @if($ewallets)
+                                    @foreach($ewallets as $e)                                    
+                                        <tr>                                                
+                                            <td>{{$e->operador}}</td>                                                                                                                        
+                                            <td>{{$e->cuenta}}</td>                                                
+                                        </tr>
+                                    @endforeach
+                                @else                                    
+                            @endif                   
+                            </tbody>
+                        </table>
+                        
+                        <div class="form-group">
+                            <center>                                   
+                                <button id="nuevaInformacionAcademica" class="btn btn-primary form-control"  style="width:80%" data-toggle="modal" data-target="#WalletModal">Agregar cartera</button>
+                            </center>
+                        </div>    
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="TarjetaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Tarjeta</h4>
+            </div>            
+            <!-- Modal Body -->
+            <div class="modal-body">                
+                <form class="form-horizontal" role="form" action="{{route('nuevaTarjeta')}}" method="POST">
+                {{ csrf_field() }}
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Operador</label>
+                    <div class="col-sm-10">
+                        <div class="slidecontainer">
+                            <input type="text" id="nivel" name="operador" class="form-control" required value="">
+                        </div>
+                    </div>   
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Numero</label>
+                    <div class="col-sm-10">
+                        <div class="slidecontainer">
+                            <input type="text" id="nivel" name="numero" class="form-control" required value="">
+                        </div>
+                    </div>   
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Terminacion</label>
+                    <div class="col-sm-10">
+                        <div class="slidecontainer">
+                            <input type="text" id="nivel" name="terminacion" class="form-control" required value="">
+                        </div>
+                    </div>   
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >CCV</label>
+                    <div class="col-sm-10">
+                        <div class="slidecontainer">
+                            <input type="text" id="nivel" name="codigo" class="form-control" required value="">
+                        </div>
+                    </div>   
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Nombre usuario</label>
+                    <div class="col-sm-10">
+                        <div class="slidecontainer">
+                            <input type="text" id="nivel" name="nombre" class="form-control" required value="">
+                        </div>
+                    </div>   
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Vencimiento</label>
+                    <div class="col-sm-10">
+                        <div class="slidecontainer">
+                            <input type="date" id="nivel" name="vencimiento" class="form-control" required value="">
+                        </div>
+                    </div>   
+                  </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+
+                </form>          
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="TransModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Transferencia</h4>
+            </div>            
+            <!-- Modal Body -->
+            <div class="modal-body">                
+                <form class="form-horizontal" role="form" action="{{route('nuevaTrans')}}" method="POST">
+                {{ csrf_field() }}
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Nivel</label>
+                    <div class="col-sm-10">
+                        <div class="slidecontainer">
+                            <input type="text" id="nivel" name="nivel" class="form-control" required value="">
+                        </div>
+                    </div>   
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Institución</label>
+                    <div class="col-sm-10">
+                        <div class="slidecontainer">
+                            <input type="text" id="institucionIA" name="institucionIA" class="form-control" value="" required>
+                        </div>
+                    </div>                    
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Año de Inicio</label>
+                    <div class="col-sm-10">
+                        <input type="number" id="Ainicio" name="Ainicio" class="form-control" min="1950" max="2050" required>                        
+                    </div>                    
+                  </div>
+
+                   <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Año de Termino</label>
+                    <div class="col-sm-10">
+                        <input type="number" id="Atermino" name="Atermino" class="form-control" min="1950" max="2050" required>                        
+                    </div>                    
+                  </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+
+                </form>          
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="WalletModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Cartera</h4>
+            </div>            
+            <!-- Modal Body -->
+            <div class="modal-body">                
+                <form class="form-horizontal" role="form" action="{{route('nuevaCartera')}}" method="POST">
+                {{ csrf_field() }}
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Nivel</label>
+                    <div class="col-sm-10">
+                        <div class="slidecontainer">
+                            <input type="text" id="nivel" name="nivel" class="form-control" required value="">
+                        </div>
+                    </div>   
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Institución</label>
+                    <div class="col-sm-10">
+                        <div class="slidecontainer">
+                            <input type="text" id="institucionIA" name="institucionIA" class="form-control" value="" required>
+                        </div>
+                    </div>                    
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Año de Inicio</label>
+                    <div class="col-sm-10">
+                        <input type="number" id="Ainicio" name="Ainicio" class="form-control" min="1950" max="2050" required>                        
+                    </div>                    
+                  </div>
+
+                   <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Año de Termino</label>
+                    <div class="col-sm-10">
+                        <input type="number" id="Atermino" name="Atermino" class="form-control" min="1950" max="2050" required>                        
+                    </div>                    
+                  </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+
+                </form>          
+            </div>
+            
+        </div>
+    </div>
+</div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
 <script src="//geodata.solutions/includes/countrystate.js"></script>
 <script src="{{ asset('js/bootstrap-formhelpers.js') }}"></script>

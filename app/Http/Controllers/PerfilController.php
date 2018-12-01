@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Storage;
 use App\User;
+use App\Tarjeta;
+use App\Ewallet;
+use App\Transferencia;
 use App\Certificacion;
 use App\Certificacion_Freelancer;
 use App\Habilidad;
@@ -29,7 +32,10 @@ class PerfilController extends Controller
                     ->join('idioma', 'idioma_freelancer.id_idioma_freelancer', '=', 'idioma.id_idioma')
                     ->select('users.id as usuario', 'idioma.idioma as idioma', 'idioma_freelancer.id_idioma_freelancer as id')
                     ->where('users.id', $id)
-                    ->get();       
+                    ->get();  
+        $tarjetas = DB::table('tarjeta')->where('id_user', $id)->get();
+        $transferencias = DB::table('transferencia')->where('id_user', $id)->get();
+        $ewallets =  DB::table('ewallet')->where('id_user', $id)->get();  
         $certificaciones = DB::table('users')  
                     ->join('certificacion_freelancer', 'users.id', '=', 'certificacion_freelancer.id_certificacion_freelancer')
                     ->join('certificacion', 'certificacion.id_certificacion', '=', 'certificacion_freelancer.id_certificacion_freelancer')
@@ -51,7 +57,10 @@ class PerfilController extends Controller
                                 'informacionAcademica'=>$informacionAcademica,
                                 'informacionLaboral'=>$informacionLaboral,
                                 'habilidades'=>$habilidades,
-                                'habilidad'=>$habilidad
+                                'habilidad'=>$habilidad,
+                                'tarjetas' => $tarjetas,
+                                'transferencias' => $transferencias,
+                                'ewallets' => $ewallets
                                 ]);
     }
 
@@ -226,6 +235,52 @@ class PerfilController extends Controller
         DB::table('users')->where('id',$id)->update([
             'telefono' => $request->phone           
         ]);
+        $information = DB::table('users')->select('*')->where('id',$id)->first();         
+        return redirect()->action('PerfilController@perfil',['informacionusuario'=>$information]);
+    }
+
+    public function nuevaTarjeta(Request $request)
+    {
+        $id = Auth::user()->id;
+        $tarjeta = new tarjeta;
+        $tarjeta->operador = $request->operador;
+        $tarjeta->numero = $request->numero;
+        $tarjeta->terminacion = $request->terminacion;
+        $tarjeta->codigo = $request->codigo;
+        $tarjeta->vencimiento = $request->vencimiento;
+        $tarjeta->nombre = $request->nombre;
+        $tarjeta->id_user = Auth::user()->id;
+        $tarjeta->save();
+        $information = DB::table('users')->select('*')->where('id',$id)->first();         
+        return redirect()->action('PerfilController@perfil',['informacionusuario'=>$information]);
+    }
+
+    public function nuevaTransferencia(Request $request)
+    {
+        $id = Auth::user()->id;
+        $tarjeta = new transferencia;
+        $tarjeta->nombre_banco = $request->nombre_banco;
+        $tarjeta->numero_sucursal = $request->numero_sucursal;
+        $tarjeta->direccion = $request->direccion;
+        $tarjeta->codigo_postal = $request->codigo_postal;
+        $tarjeta->codigo_SWIFT = $request->codigo_SWIFT;
+        $tarjeta->nombre_cliente = $request->nombre_cliente;
+        $tarjeta->clabe = $request->clabe;
+        $tarjeta->id_user = Auth::user()->id;
+        $tarjeta->save();
+        $information = DB::table('users')->select('*')->where('id',$id)->first();         
+        return redirect()->action('PerfilController@perfil',['informacionusuario'=>$information]);
+    }
+
+    public function nuevaEwallet(Request $request)
+    {
+        $id = Auth::user()->id;
+        $tarjeta = new ewallet;
+        $tarjeta->operador = $request->operador;
+        $tarjeta->cuenta = $request->cuenta;
+        $tarjeta->clave = $request->clave;
+        $tarjeta->id_user = Auth::user()->id;
+        $tarjeta->save();
         $information = DB::table('users')->select('*')->where('id',$id)->first();         
         return redirect()->action('PerfilController@perfil',['informacionusuario'=>$information]);
     }

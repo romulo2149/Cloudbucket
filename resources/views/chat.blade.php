@@ -101,7 +101,7 @@ function getMsj(i,usuario)
                   }
                   else
                   {
-                    htmlMSJ = htmlMSJ + '<input id="idusuario" type="hidden" value="{{Auth::user()->id}}"><input id="idchat" type="hidden" value="'+json.lista[j].chat+'"><div class="incoming_msg"><div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div><div class="received_msg"><div class="received_withd_msg"><p>'+json.lista[j].mensaje+'</p><span class="time_date">' +json.lista[j].created_at+'</span></div></div></div>';
+                    htmlMSJ = htmlMSJ + '<input id="idusuario" type="hidden" value="{{Auth::user()->id}}"><input id="idchat" type="hidden" value="'+json.lista[j].chat+'"><div class="incoming_msg"><div class="received_msg"><div class="received_withd_msg"><p>'+json.lista[j].mensaje+'</p><span class="time_date">' +json.lista[j].created_at+'</span></div></div></div>';
                   }  
                 }
                 $("#contenedor").append(htmlMSJ);
@@ -133,7 +133,7 @@ function autoMsj()
                   }
                   else
                   {
-                    htmlMSJ = htmlMSJ + '<input id="idusuario" type="hidden" value="{{Auth::user()->id}}"><input id="idchat" type="hidden" value="'+json.lista[j].chat+'"><div class="incoming_msg"><div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div><div class="received_msg"><div class="received_withd_msg"><p>'+json.lista[j].mensaje+'</p><span class="time_date">' +json.lista[j].created_at+'</span></div></div></div>';
+                    htmlMSJ = htmlMSJ + '<input id="idusuario" type="hidden" value="{{Auth::user()->id}}"><input id="idchat" type="hidden" value="'+json.lista[j].chat+'"><div class="incoming_msg"><div class="received_msg"><div class="received_withd_msg"><p>'+json.lista[j].mensaje+'</p><span class="time_date">' +json.lista[j].created_at+'</span></div></div></div>';
                   }  
                 }
                 

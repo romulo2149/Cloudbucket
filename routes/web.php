@@ -32,6 +32,9 @@ Route::post('/perfil/informacionLaboral/{idInformacionLaboral}/delete', 'PerfilC
 Route::post('/perfil/informacionLaboral/editInformacionLaboral', 'PerfilController@editInformacionLaboral')->name('editInformacionLaboral');
 Route::post('/perfil/saveSalary', 'PerfilController@saveSalary')->name('saveSalary');
 Route::post('/perfil/savePhone', 'PerfilController@savePhone')->name('savePhone');
+Route::post('/perfil/nuevaTarjeta', 'PerfilController@nuevaTarjeta')->name('nuevaTarjeta');
+Route::post('/perfil/nuevaTrans', 'PerfilController@nuevaTransferencia')->name('nuevaTrans');
+Route::post('/perfil/nuevaCartera', 'PerfilController@nuevaEwallet')->name('nuevaCartera');
 
 //Rutas proyecto
 Route::get('/proyecto', 'ProyectoController@cargarvista')->name('vistaproyecto');
@@ -49,6 +52,8 @@ Route::get('/firmarFreelancer', 'SolicitudController@firmar')->name('firmar');
 Route::put('/tratoContrato', 'SolicitudController@trato')->name('tratoContrato');
 Route::get('/verContrato', 'SolicitudController@firmar')->name('verContrato');
 Route::get('/workspace', 'ProyectoController@work')->name('workspace');
+Route::post('/estatusProgreso', 'ProyectoController@progreso')->name('estatusProgreso');
+Route::post('/liberar', 'ProyectoController@liberar')->name('liberar');
 
 Route::get('/chat', 'ChatController@show')->name('chat');
 Route::post('/crearChat', 'ChatController@crear')->name('crearChat');
